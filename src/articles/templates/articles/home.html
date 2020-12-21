@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %} Дом {%endblock%}
+
+
+{% block content %}
+
+<div class="row">
+    <div class="col-8">
+        {% for article in articles.reverse %}
+            <div class="my-5 card text-center">
+              <div class="card-header">
+                  {{article.name}}
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">{{article.text}}</h5>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+              </div>
+              <div class="card-footer text-muted">
+                  {{article.create_date}}
+              </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="col-4">
+        <div class="my-5 card border-dark mb-3" style="max-width: 36rem;">
+          <div class="card-header">Самые коментируемые записи</div>
+          <div class="card-body text-dark">
+              {% for top in top_articles %}
+                <h5 class="card-title">{{top.name}} <span class="badge bg-secondary">{{top.id}}</span></h5>
+              {% endfor %}
+          </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
