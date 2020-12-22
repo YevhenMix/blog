@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %} {{article.name}} {% endblock %}
+
+
+{% block content %}
+
+<div class="row">
+    <div class="col-12 text-center">
+        <h1>{{article.name}}</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <h2>{{article.text}}</h2>
+        <p>{% lorem 5 p %}</p>
+    </div>
+</div>
+
+
+{% endblock %}

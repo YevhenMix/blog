@@ -14,7 +14,7 @@
               </div>
               <div class="card-body">
                 <h5 class="card-title">{{article.text}}</h5>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+                <a href="{% url 'articles:detail' pk=article.id %}" class="btn btn-primary">Читать полностью</a>
               </div>
               <div class="card-footer text-muted">
                   {{article.create_date}}
@@ -32,6 +32,10 @@
               {% endfor %}
           </div>
         </div>
+        <div class="text-center">
+            <a href="{% url 'articles:create' %}" class="btn btn-outline-dark">Создать новый пост</a>
+        </div>
+
     </div>
 </div>
 

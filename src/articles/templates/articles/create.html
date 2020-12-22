@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %} Созадть статью {% endblock %}
+
+
+{% block content %}
+
+<h1 class="display-4 text-center">Создать новый пост</h1>
+<div class="row mx-auto text-center">
+    <div class='col-md-12 mx-auto'>
+        <form action="" method="post"> {% csrf_token %}
+            <div class="my-4">{{form.as_p}}</div>
+            <input class="btn btn-success my-4" type="submit" value="Создать">
+        </form>
+    </div>
+</div>
+
+{% endblock %}
