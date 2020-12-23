@@ -18,5 +18,14 @@
     </div>
 </div>
 
+{% if user.is_authenticated %}
+    <div class="row my-4">
+        <div class="col-6">
+            <a href="{% url 'articles:update' pk=article.id %}" class="btn btn-success" role="button" data-bs-toggle="button type='button'">Изменить статью</a>
+            <a href="{% url 'articles:delete' pk=article.id %}" class="btn btn-danger" role="button" data-bs-toggle="button type='button'">Удалить статью</a>
+        </div>
+    </div>
+{% endif %}
+
 
 {% endblock %}

@@ -1,16 +1,16 @@
 {% extends "base.html" %}
 
-{% block title %} Дом {%endblock%}
+{% block title %} Все статьи {%endblock%}
 
 
 {% block content %}
 
 <div class="row">
     <div class="col-8">
-        {% for article in articles.reverse %}
+        {% for article in articles %}
             <div class="my-5 card text-center">
               <div class="card-header">
-                  {{article.name}}
+                  {{article.name}} {{article.id}}
               </div>
               <div class="card-body">
                 <h5 class="card-title">{{article.text}}</h5>
@@ -21,6 +21,34 @@
               </div>
             </div>
         {% endfor %}
+
+        <nav aria-label="...">
+          <ul class="pagination">
+            {% if articles.has_previous %}
+            <li class="page-item">
+              <a class="page-link" href="?page=1">First</a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="?page={{ articles.previous_page_number }}">&laquo;</a>
+            </li>
+            {% endif %}
+
+            {% for page in articles.paginator.page_range %}
+            <li class="page-item {% if page == articles.number %} active {% endif %}">
+              <a class="page-link" href="?page={{page}}">{{ page }}</a>
+            </li>
+            {% endfor %}
+
+            {% if articles.has_next %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ articles.next_page_number }}">&raquo;</a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="?page={{ articles.paginator.num_pages }}">Last</a>
+            </li>
+            {% endif %}
+          </ul>
+        </nav>
     </div>
 
     <div class="col-4">
@@ -32,11 +60,14 @@
               {% endfor %}
           </div>
         </div>
-        <div class="text-center">
-            <a href="{% url 'articles:create' %}" class="btn btn-outline-dark">Создать новый пост</a>
-        </div>
-
+        {% if  user.is_authenticated %}
+            <div class="text-center">
+                <a href="{% url 'articles:create' %}" class="btn btn-outline-dark">Создать новый пост</a>
+            </div>
+        {% endif %}
     </div>
 </div>
+
+
 
 {% endblock %}

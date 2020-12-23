@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+
+{% block title %} Удалить статью {% endblock %}
+
+
+{% block content %}
+<div class="row">
+    <h1 class="display-2 text-center"> Точно хотите удалить статью?</h1>
+    <h3 class="display-3 text-center"> {{ article.name }}</h3>
+</div>
+<div class="row mx-auto">
+    <div class='col-6 my-4'>
+        <form action="{% url 'articles:delete_cor' pk=article.pk %}" method="post"> {% csrf_token %}
+            <input class="btn btn-danger" type="submit" value="Да, удалить!">
+            <a class="btn btn-primary" href="{% url 'main' %}" role="button">Нет, оставить!</a>
+        </form>
+    </div>
+</div>
+
+
+
+{% endblock %}
