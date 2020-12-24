@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %} Регистрация успешна {% endblock %}
+
+{% block content %}
+<div class="row ">
+  <div class='col-md-8 mx-auto'>
+    <div class="card text-center my-4">
+      <div class="card-header">
+        ПОЗДРАВЛЯЕМ
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">Регистрация заершена</h5>
+        <p class="card-text">Приветствуем Вас на сайте,<strong>{{ new_user.username }}</strong>. Что бы написать свою первую статью
+            <a href="{% url 'users:login' %}">войдите</a>
+            в систему. Удачного дальнейшего использования!
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

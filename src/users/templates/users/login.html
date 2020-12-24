@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %} Вход {% endblock %}
+
+
+{% block content %}
+
+<div class="col-12">
+    <h1 class="display-4 text-center">Войдите на сайт</h1>
+        <div class="row mx-auto text-center">
+            <div class='col-md-4 mx-auto'>
+                <form action="" method="post"> {% csrf_token %}
+                    <div class="my-4">{{form.as_p}}</div>
+                    <input class="btn btn-success my-4" type="submit" value="Войти">
+                    <p>Если у Вас еще нет аккаунта, вы можете пройти <a href="{% url 'users:register' %}">регистрацию</a>!</p>
+                </form>
+            </div>
+        </div>
+</div>
+
+
+{% endblock %}
