@@ -10,14 +10,14 @@
         {% for article in articles %}
             <div class="my-5 card text-center">
               <div class="card-header">
-                  {{article.name}} {{article.id}}
+                  {{article.name}}
               </div>
               <div class="card-body">
                 <h5 class="card-title">{{article.text}}</h5>
                 <a href="{% url 'articles:detail' pk=article.id %}" class="btn btn-primary">Читать полностью</a>
               </div>
-              <div class="card-footer text-muted">
-                  {{article.create_date}}
+              <div class="card-footer text-muted text-end">
+                  {{article.create_date | date:"d.m.y - G:i"}}
               </div>
             </div>
         {% endfor %}
