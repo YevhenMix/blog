@@ -1,26 +1,31 @@
 {% extends "base.html" %}
 
-{% block title %} Все статьи {%endblock%}
+{% block title %} Статьи {{articles.first.user}} {%endblock%}
 
 
 {% block content %}
 
-<div class="row">
-    <div class="col-8">
+<div class="row ">
+    <div class="col-8 mx-auto">
+        <h1 class="display-3 text-center">Статьи {{articles.first.user.username.title}}</h1>
         {% for article in articles %}
-            <div class="my-5 card text-center">
-              <div class="card-header">
+            <div class="my-5 card ">
+              <div class="card-header text-center">
                   {{article.name}}
               </div>
               <div class="card-body">
                 <h5 class="card-title clip">{{article.text}}</h5>
                 <a href="{% url 'articles:detail' pk=article.id %}" class="btn btn-primary">Читать полностью</a>
+                  {% if user.id == article.user.id%}
+                    <a href="{% url 'articles:update' pk=article.id %}" class="btn btn-success" role="button" data-bs-toggle="button type='button'">Изменить статью</a>
+                    <a href="{% url 'articles:delete' pk=article.id %}" class="btn btn-danger" role="button" data-bs-toggle="button type='button'">Удалить статью</a>
+                  {% endif %}
               </div>
               <div class="card-footer text-muted">
                   <div class="container">
                       <div class="row">
                           <div class="col-6 text-start">
-                              Автор: <a href="{% url 'articles:all' pk=article.user.id %}">{{article.user}}</a>
+                              Автор: {{article.user}}
                           </div>
                           <div class="col-6 text-end">
                               {{article.create_date | date:"d.m.y - G:i"}}
@@ -58,31 +63,6 @@
             {% endif %}
           </ul>
         </nav>
-    </div>
-
-    <div class="col-4">
-        <div class="my-5 card border-dark mb-3" style="max-width: 36rem;">
-          <div class="card-header text-center">Самые коментируемые записи</div>
-          <div class="card-body text-dark">
-              {% for top in top_articles %}
-                <h5 class="card-title"><a href="{% url 'articles:detail' pk=top.id %}">{{top.name}}</a>
-                    <span class="badge bg-secondary">
-                        {% for post, com_cn in com_sz %}
-                            {% if  top.id == post%}
-                                {{com_cn}}
-                            {% endif %}
-                        {% endfor %}
-                    </span>
-                </h5>
-              <hr>
-              {% endfor %}
-          </div>
-        </div>
-        {% if  user.is_authenticated %}
-            <div class="text-center">
-                <a href="{% url 'articles:create' %}" class="btn btn-outline-dark">Создать новый пост</a>
-            </div>
-        {% endif %}
     </div>
 </div>
 

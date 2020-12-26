@@ -4,7 +4,7 @@ from articles.models import Article, Comment
 
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = ('name', 'create_date')
+    list_display = ('name', 'user', 'create_date')
 
 
 @admin.register(Comment)

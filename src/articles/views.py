@@ -8,7 +8,7 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, DeleteView, UpdateView
 from django.views.generic.edit import FormMixin
 
-from articles.forms import ArticleForm, CommentForm
+from articles.forms import ArticleForm, CommentForm, ArticleModelForm
 from articles.models import Article, Comment
 
 USER = get_user_model()
@@ -16,12 +16,25 @@ USER = get_user_model()
 
 def all_article_view(request):
     articles = Article.objects.all()
-    auths = USER.objects.all()
-    top_5 = articles[:5]
+    comments = Comment.objects.all()
+    tmp = {}
+    for com in comments:            # подсчет всех коментов к отдельному посту
+        tmp.setdefault(com.post.id, 0)
+        tmp[com.post.id] += 1
+
+    list_d = list(tmp.items())                         # делаем список для дальнейшей сортировки
+    list_d.sort(key=lambda i: i[1], reverse=True)       # сортировка по коментам от большего к меньшему
+
+    post_lst = tuple([i[0] for i in list_d[:5]])        # формируем кортеж нужных постов
+    comm_count = tuple([i[1] for i in list_d[:5]])      # кортеж с количеством коментов
+
+    top_5 = Article.objects.filter(id__in=post_lst)     # берем из БД нужные посты
+    top_5 = [top_5.get(id=pk) for pk in post_lst]       # сортируем их в нужном порядке
+
     paginator = Paginator(articles, 10)
     page = request.GET.get('page')
     articles = paginator.get_page(page)
-    context = {'articles': articles, 'top_articles': top_5}
+    context = {'articles': articles, 'top_articles': top_5, 'com_sz': list_d, }
     return render(request, 'articles/home.html', context)
 
 
@@ -32,6 +45,24 @@ class ArticleCreateView(SuccessMessageMixin,  LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('main')
     success_message = 'Статья успешно создана!'
     login_url = '/users/login/'
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class(initial=self.initial)
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request, *args, **kwargs):
+        data = request.POST
+        form = self.form_class()
+        if data:
+            user = request.user
+            name = data['name']
+            text = data['text']
+            article = Article(name=name, text=text, user=user)
+            print(article)
+            article.save()
+            return redirect('main')
+
+        return render(request, self.template_name, {'form': form})
 
 
 class ArticleDetailView(FormMixin, DetailView):
@@ -54,6 +85,7 @@ def save_comment_view(request):
         if data:
             text = data['text']
             user = USER.objects.filter(id=int(data['user']))
+            print(user)
             post = Article.objects.get(id=int(data['post']))
             comment = Comment(text=text, post=post)
             comment.save()
@@ -79,9 +111,13 @@ def delete_article(request, pk):
 class ArticleUpdateView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     model = Article
     template_name = 'articles/update.html'
-    form_class = ArticleForm
+    form_class = ArticleModelForm
     success_url = reverse_lazy('main')
     success_message = 'Статья обновлена!'
     login_url = '/users/login/'
 
 
+def all_articles_one_user_view(request, pk):
+    articles = Article.objects.filter(user=pk)
+    context = {'articles': articles}
+    return render(request, 'articles/all_for_one.html', context)

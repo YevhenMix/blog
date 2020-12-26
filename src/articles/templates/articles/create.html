@@ -9,7 +9,9 @@
 <div class="row mx-auto text-center">
     <div class='col-md-12 mx-auto'>
         <form action="" method="post"> {% csrf_token %}
-            <div class="my-4">{{form.as_p}}</div>
+            <div class="my-4">{{form.name}}</div>
+            <div class="my-4">{{form.text}}</div>
+            <input type='hidden' name='user' value='{{request.user}}'/>
             <input class="btn btn-success my-4" type="submit" value="Создать">
         </form>
     </div>

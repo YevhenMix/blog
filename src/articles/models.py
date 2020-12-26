@@ -7,6 +7,7 @@ USER = get_user_model()
 class Article(models.Model):
     name = models.CharField(max_length=250, unique=True)
     text = models.TextField(max_length=2000)
+    user = models.ForeignKey(USER, on_delete=models.CASCADE, verbose_name='Пользователь', null=True)
     create_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

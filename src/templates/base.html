@@ -49,10 +49,10 @@
           <ul class="navbar-nav">
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                {{user.username}}
+                {{user.username.title}}
               </a>
               <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                <li><a class="dropdown-item" href="#">Ваши статьи</a></li>
+                <li><a class="dropdown-item" href="{% url 'articles:all' pk=user.id %}">Ваши статьи</a></li>
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="{% url 'users:logout' %}">Выйти</a></li>
               </ul>

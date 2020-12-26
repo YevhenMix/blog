@@ -18,20 +18,21 @@
     </div>
 </div>
 
-{% if user.is_authenticated %}
+{% if user.id == article.user.id%}
     <div class="row my-4">
         <div class="col-6">
             <a href="{% url 'articles:update' pk=article.id %}" class="btn btn-success" role="button" data-bs-toggle="button type='button'">Изменить статью</a>
             <a href="{% url 'articles:delete' pk=article.id %}" class="btn btn-danger" role="button" data-bs-toggle="button type='button'">Удалить статью</a>
         </div>
     </div>
-
+{% endif %}
 <hr>
 
+{% if user.is_authenticated%}
 <div class="row">
     <div class="col-6">
         <form action="{% url 'articles:save' %}" method="post"> {% csrf_token %}
-            <p>{{user.username}}</p>
+            <p>{{user.username.title}}</p>
             <div class="my-2">{{form.text}}</div>
             <input type='hidden' name='user' value='{{user.id}}'/>
             <input type='hidden' name='post' value='{{article.id}}'/>
@@ -48,9 +49,10 @@
 </div>
 {% endif %}
 <hr>
+<h4 class="display-4">Комментарии:</h4>
 <div class="row">
     <div class="col-8">
-        <table class="table table-dark table-striped">
+        <table class="table table-dark table-striped bottom-zero">
           <tbody>
           {% for comment in comments %}
             <tr>
@@ -64,7 +66,7 @@
                               <small class="head-comm">{{comment.user.all.first}}, {{comment.pub_date| date:"G:i - d.m.y"}}</small>
                               <p class="comment">{{comment.text}}</p>
                               <small class="head-comm">
-                                  <a href="#">Статьи пользователя</a>
+                                  <a href="{% url 'articles:all' pk=comment.user.all.first.id %}">Статьи пользователя</a>
                               </small>
                           </div>
                       </div>
