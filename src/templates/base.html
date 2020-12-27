@@ -38,12 +38,6 @@
         <li class="nav-item">
           <a class="nav-link {% if request.path == main %} active {% endif %}" aria-current="page" href="{% url 'main' %}">Записи</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link {% if request.path == articles_home %} active {% endif %}" href="{% url 'articles:home' %}">Link</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-        </li>
       </ul>
         {% if user.is_authenticated %}
           <ul class="navbar-nav">
@@ -53,6 +47,7 @@
               </a>
               <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
                 <li><a class="dropdown-item" href="{% url 'articles:all' pk=user.id %}">Ваши статьи</a></li>
+                <li><a class="dropdown-item" href="{% url 'articles:create'%}">Создать новый пост</a></li>
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="{% url 'users:logout' %}">Выйти</a></li>
               </ul>
@@ -100,9 +95,29 @@
 </div>
 
 <div class="container">
-  <footer class="footer mt-auto py-5 bg-dark">
+  <footer class="footer mt-auto py-3 bg-dark">
     <div class="container">
-      <span class="text-muted">Place sticky footer content here.</span>
+      <div class="row">
+        <h3 class="text-muted display-3">Контакты:</h3>
+        <div class="col-1">
+          <a href="https://github.com/YevhenMix">
+            <img src="https://img.icons8.com/ios/50/000000/github.png"/>
+          </a>
+        </div>
+        <div class="col-1">
+          <a href="https://t.me/Jeka_mix">
+            <img src="https://img.icons8.com/ios/50/000000/telegram-app.png"/>
+          </a>
+        </div>
+        <div class="col-1">
+          <a href="https://www.instagram.com/mix.jeka/">
+            <img src="https://img.icons8.com/ios/50/000000/instagram-new--v1.png"/>
+          </a>
+
+        </div>
+
+      </div>
+
     </div>
   </footer>
 </div>

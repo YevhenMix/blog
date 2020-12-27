@@ -1,24 +1,24 @@
 {% extends "base.html" %}
 
-{% block title %} Статьи {{articles.first.user}} {%endblock%}
+{% block title %} Статьи {{user_now}} {%endblock%}
 
 
 {% block content %}
 
 <div class="row ">
     <div class="col-8 mx-auto">
-        <h1 class="display-3 text-center">Статьи {{articles.first.user.username.title}}</h1>
+        <h1 class="display-3 text-center">Статьи {{user_now}}</h1>
         {% for article in articles %}
             <div class="my-5 card ">
               <div class="card-header text-center">
-                  {{article.name}}
+                  <strong>{{article.name}}</strong>
               </div>
               <div class="card-body">
-                <h5 class="card-title clip">{{article.text}}</h5>
-                <a href="{% url 'articles:detail' pk=article.id %}" class="btn btn-primary">Читать полностью</a>
+                <p class="post-text clip">{{article.text}}</p>
+                <a href="{% url 'articles:detail' pk=article.id %}" class="btn btn-outline-primary">Читать полностью</a>
                   {% if user.id == article.user.id%}
-                    <a href="{% url 'articles:update' pk=article.id %}" class="btn btn-success" role="button" data-bs-toggle="button type='button'">Изменить статью</a>
-                    <a href="{% url 'articles:delete' pk=article.id %}" class="btn btn-danger" role="button" data-bs-toggle="button type='button'">Удалить статью</a>
+                    <a href="{% url 'articles:update' pk=article.id %}" class="btn btn-outline-success" role="button" data-bs-toggle="button type='button'">Изменить статью</a>
+                    <a href="{% url 'articles:delete' pk=article.id %}" class="btn btn-outline-danger" role="button" data-bs-toggle="button type='button'">Удалить статью</a>
                   {% endif %}
               </div>
               <div class="card-footer text-muted">

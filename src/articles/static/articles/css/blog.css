@@ -1,7 +1,7 @@
 .comment{
     margin-left: 100;
     margin-bottom: 0;
-    color: rgba(255,255,255,.55);
+    /*color: rgba(255,255,255,.55);*/
     font-family: Arial, Helvetica, sans-serif;
     letter-spacing: 1px;
     font-weight: 100;
@@ -10,7 +10,7 @@
 
 .head-comm{
     font-size: 12px;
-    color: #fff;
+    /*color: #fff;*/
     letter-spacing: 1px;
     font-weight: 500;
 }
@@ -32,4 +32,16 @@ a{
 
 .bottom-zero{
     margin-bottom: 0;
+}
+
+p.post-text{
+    font-weight: 100;
+    font-family: 'Fira Sans', sans-serif;
+    line-height: 1.5em;
+    font-size: 20px;
+    text-align: justify;
+}
+
+.post-head{
+    margin-bottom: 20px;
 }

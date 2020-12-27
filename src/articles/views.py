@@ -58,7 +58,6 @@ class ArticleCreateView(SuccessMessageMixin,  LoginRequiredMixin, CreateView):
             name = data['name']
             text = data['text']
             article = Article(name=name, text=text, user=user)
-            print(article)
             article.save()
             return redirect('main')
 
@@ -85,7 +84,6 @@ def save_comment_view(request):
         if data:
             text = data['text']
             user = USER.objects.filter(id=int(data['user']))
-            print(user)
             post = Article.objects.get(id=int(data['post']))
             comment = Comment(text=text, post=post)
             comment.save()
@@ -119,5 +117,9 @@ class ArticleUpdateView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
 
 def all_articles_one_user_view(request, pk):
     articles = Article.objects.filter(user=pk)
-    context = {'articles': articles}
+    user_now = articles[0].user
+    paginator = Paginator(articles, 10)
+    page = request.GET.get('page')
+    articles = paginator.get_page(page)
+    context = {'articles': articles, 'user_now': user_now}
     return render(request, 'articles/all_for_one.html', context)

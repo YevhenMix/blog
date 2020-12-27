@@ -10,11 +10,11 @@
         {% for article in articles %}
             <div class="my-5 card text-center">
               <div class="card-header">
-                  {{article.name}}
+                  <strong>{{article.name}}</strong>
               </div>
-              <div class="card-body">
-                <h5 class="card-title clip">{{article.text}}</h5>
-                <a href="{% url 'articles:detail' pk=article.id %}" class="btn btn-primary">Читать полностью</a>
+              <div class="card-body text-start">
+                <p  class="post-text clip">{{article.text}}</p>
+                <a href="{% url 'articles:detail' pk=article.id %}" class="btn btn-outline-primary">Читать полностью</a>
               </div>
               <div class="card-footer text-muted">
                   <div class="container">
@@ -62,7 +62,7 @@
 
     <div class="col-4">
         <div class="my-5 card border-dark mb-3" style="max-width: 36rem;">
-          <div class="card-header text-center">Самые коментируемые записи</div>
+          <div class="card-header text-center"><strong>Самые коментируемые записи</strong></div>
           <div class="card-body text-dark">
               {% for top in top_articles %}
                 <h5 class="card-title"><a href="{% url 'articles:detail' pk=top.id %}">{{top.name}}</a>

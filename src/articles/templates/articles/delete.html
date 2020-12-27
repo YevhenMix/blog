@@ -5,19 +5,40 @@
 
 
 {% block content %}
+
+{% if user == article.user %}
 <div class="row">
     <h1 class="display-2 text-center"> Точно хотите удалить статью?</h1>
-    <h3 class="display-3 text-center"> {{ article.name }}</h3>
+    <h3 class="display-3 text-center"> <strong>{{ article.name }}</strong></h3>
 </div>
 <div class="row mx-auto">
     <div class='col-6 my-4'>
         <form action="{% url 'articles:delete_cor' pk=article.pk %}" method="post"> {% csrf_token %}
-            <input class="btn btn-danger" type="submit" value="Да, удалить!">
-            <a class="btn btn-primary" href="{% url 'main' %}" role="button">Нет, оставить!</a>
+            <input class="btn btn-outline-danger" type="submit" value="Да, удалить!">
+            <a class="btn btn-outline-primary" href="{% url 'articles:detail' pk=article.id %}" role="button">Нет, оставить!</a>
         </form>
     </div>
 </div>
-
-
-
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+{% else %}
+<div class="row mx-auto">
+    <div class='col-12 my-4'>
+        <h1 class="display-4">К сожалению вы не обладаете нужными правами!</h1>
+        <a class="btn btn-outline-primary" href="{% url 'main' %}" role="button">Вернутся на главную</a>
+    </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+{% endif %}
 {% endblock %}

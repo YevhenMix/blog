@@ -4,15 +4,33 @@
 
 
 {% block content %}
-
+{% if user == article.user %}
 <h1 class="display-4 text-center">Изменить статью</h1>
 <div class="row mx-auto text-center">
     <div class='col-md-12 mx-auto'>
         <form action="" method="post"> {% csrf_token %}
             <div class="my-4">{{form.as_p}}</div>
-            <input class="btn btn-success my-4" type="submit" value="Сохранить">
+            <input class="btn btn-outline-success my-4" type="submit" value="Сохранить">
         </form>
     </div>
 </div>
+
+{% else %}
+<div class="row mx-auto">
+    <div class='col-12 my-4'>
+        <h1 class="display-4">К сожалению вы не обладаете нужными правами!</h1>
+        <a class="btn btn-outline-primary" href="{% url 'main' %}" role="button">Вернутся на главную</a>
+    </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+{% endif %}
+
 
 {% endblock %}
